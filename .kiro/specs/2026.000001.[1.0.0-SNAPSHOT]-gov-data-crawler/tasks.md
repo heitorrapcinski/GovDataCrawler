@@ -26,12 +26,12 @@
   - [x] 3.7 Write property test in `tests/property/test_output_structure_props.py` for Property 4: directory structure follows hierarchical pattern
   - [x] 3.8 Run tests and verify all pass
 
-- [ ] 4. Implement the MetadataWriter and ContractMetadata data model
-  - [~] 4.1 Create `gov_data_crawler/contract.py` with the `ContractMetadata` dataclass, `ProcessingResult` dataclass, `HttpRequestError` exception, and `ParsingError` exception
-  - [~] 4.2 Create `gov_data_crawler/metadata.py` with the `MetadataWriter` class: serialize `ContractMetadata` to JSON with `ensure_ascii=False` and `indent=2`, write to `metadata.json` in target directory
-  - [~] 4.3 Write unit tests in `tests/unit/test_metadata_writer.py` for JSON serialization and file writing
-  - [~] 4.4 Write property test in `tests/property/test_metadata_roundtrip_props.py` for Property 3: serialization round-trip preserves all fields
-  - [~] 4.5 Run tests and verify all pass
+- [x] 4. Implement the MetadataWriter and ContractMetadata data model
+  - [x] 4.1 Create `gov_data_crawler/contract.py` with the `ContractMetadata` dataclass, `ProcessingResult` dataclass, `HttpRequestError` exception, and `ParsingError` exception
+  - [x] 4.2 Create `gov_data_crawler/metadata.py` with the `MetadataWriter` class: serialize `ContractMetadata` to JSON with `ensure_ascii=False` and `indent=2`, write to `metadata.json` in target directory
+  - [x] 4.3 Write unit tests in `tests/unit/test_metadata_writer.py` for JSON serialization and file writing
+  - [x] 4.4 Write property test in `tests/property/test_metadata_roundtrip_props.py` for Property 3: serialization round-trip preserves all fields
+  - [x] 4.5 Run tests and verify all pass
 
 - [ ] 5. Implement the HttpClient component
   - [~] 5.1 Create `gov_data_crawler/http_client.py` with the `HttpClient` class and `HttpResponse` dataclass
