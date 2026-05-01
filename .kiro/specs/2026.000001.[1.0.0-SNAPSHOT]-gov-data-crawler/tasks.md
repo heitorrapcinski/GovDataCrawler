@@ -99,7 +99,7 @@
 - [-] 14. Version control and release
   - [x] 14.1 Ensure all previous tasks are complete and tests pass
   - [x] 14.2 Remove SNAPSHOT suffix from all version references in the codebase
-  - [-] 14.3 Commit the version bump: "release: 1.0.0 - gov-data-crawler"
-  - [~] 14.4 Merge branch into main/master
+  - [x] 14.3 Commit the version bump: "release: 1.0.0 - gov-data-crawler"
+  - [-] 14.4 Merge branch into main/master
   - [~] 14.5 Apply Git tag: 1.0.0 (without SNAPSHOT)
   - [~] 14.6 Push branch, merge, and tag to remote
