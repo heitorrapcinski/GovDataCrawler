@@ -39,13 +39,13 @@
   - [x] 5.3 Integrate `DelayMechanism` to apply delay before each request
   - [x] 5.4 Write unit tests in `tests/unit/test_http_client.py` using `responses` library to mock HTTP calls, test retry behavior, 404 handling, and delay integration
 
-- [ ] 6. Implement the ListingParser and ListingNavigator components
-  - [~] 6.1 Create `gov_data_crawler/listing.py` with the `ListingParser` class: extract contract IDs from listing page HTML using BeautifulSoup, extract next-page URL from pagination links
-  - [~] 6.2 Implement `ListingNavigator` class: paginate through all listing pages using HttpClient and ListingParser, collect all contract IDs
-  - [~] 6.3 Write unit tests in `tests/unit/test_listing_parser.py` for contract ID extraction, next-page URL extraction, empty page handling, and last page detection
-  - [~] 6.4 Write property test in `tests/property/test_listing_parser_props.py` for Property 1: parser extracts all embedded contract IDs
-  - [~] 6.5 Write property test in `tests/property/test_url_construction_props.py` for Property 2: contract detail URL is correctly constructed
-  - [~] 6.6 Run tests and verify all pass
+- [x] 6. Implement the ListingParser and ListingNavigator components
+  - [x] 6.1 Create `gov_data_crawler/listing.py` with the `ListingParser` class: extract contract IDs from listing page HTML using BeautifulSoup, extract next-page URL from pagination links
+  - [x] 6.2 Implement `ListingNavigator` class: paginate through all listing pages using HttpClient and ListingParser, collect all contract IDs
+  - [x] 6.3 Write unit tests in `tests/unit/test_listing_parser.py` for contract ID extraction, next-page URL extraction, empty page handling, and last page detection
+  - [x] 6.4 Write property test in `tests/property/test_listing_parser_props.py` for Property 1: parser extracts all embedded contract IDs
+  - [x] 6.5 Write property test in `tests/property/test_url_construction_props.py` for Property 2: contract detail URL is correctly constructed
+  - [x] 6.6 Run tests and verify all pass
 
 - [ ] 7. Implement the DetailParser component
   - [~] 7.1 Create `gov_data_crawler/detail_parser.py` with the `DetailParser` class: extract all contract fields (orgao, unidade_gestora, contract_number, supplier_name, contract_value, start_date, end_date, object_description, extra_fields) from detail page HTML using BeautifulSoup
