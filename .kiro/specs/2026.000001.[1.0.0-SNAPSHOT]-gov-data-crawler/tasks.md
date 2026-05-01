@@ -33,11 +33,11 @@
   - [x] 4.4 Write property test in `tests/property/test_metadata_roundtrip_props.py` for Property 3: serialization round-trip preserves all fields
   - [x] 4.5 Run tests and verify all pass
 
-- [ ] 5. Implement the HttpClient component
-  - [~] 5.1 Create `gov_data_crawler/http_client.py` with the `HttpClient` class and `HttpResponse` dataclass
-  - [~] 5.2 Implement session-based HTTP GET with `requests.Session` and `HTTPAdapter` configured with `urllib3.util.retry.Retry` (max 3 retries, backoff factor 1.0, retry on 500/502/503/504)
-  - [~] 5.3 Integrate `DelayMechanism` to apply delay before each request
-  - [~] 5.4 Write unit tests in `tests/unit/test_http_client.py` using `responses` library to mock HTTP calls, test retry behavior, 404 handling, and delay integration
+- [x] 5. Implement the HttpClient component
+  - [x] 5.1 Create `gov_data_crawler/http_client.py` with the `HttpClient` class and `HttpResponse` dataclass
+  - [x] 5.2 Implement session-based HTTP GET with `requests.Session` and `HTTPAdapter` configured with `urllib3.util.retry.Retry` (max 3 retries, backoff factor 1.0, retry on 500/502/503/504)
+  - [x] 5.3 Integrate `DelayMechanism` to apply delay before each request
+  - [x] 5.4 Write unit tests in `tests/unit/test_http_client.py` using `responses` library to mock HTTP calls, test retry behavior, 404 handling, and delay integration
 
 - [ ] 6. Implement the ListingParser and ListingNavigator components
   - [~] 6.1 Create `gov_data_crawler/listing.py` with the `ListingParser` class: extract contract IDs from listing page HTML using BeautifulSoup, extract next-page URL from pagination links
