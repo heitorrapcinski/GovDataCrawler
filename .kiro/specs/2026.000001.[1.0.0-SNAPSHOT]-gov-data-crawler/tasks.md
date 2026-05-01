@@ -96,10 +96,10 @@
   - [x] 13.7 Write integration tests in `tests/integration/test_pagination_flow.py` for multi-page navigation with mocked HTTP
   - [x] 13.8 Run the full test suite and verify all tests pass
 
-- [-] 14. Version control and release
+- [x] 14. Version control and release
   - [x] 14.1 Ensure all previous tasks are complete and tests pass
   - [x] 14.2 Remove SNAPSHOT suffix from all version references in the codebase
   - [x] 14.3 Commit the version bump: "release: 1.0.0 - gov-data-crawler"
-  - [-] 14.4 Merge branch into main/master
-  - [~] 14.5 Apply Git tag: 1.0.0 (without SNAPSHOT)
-  - [~] 14.6 Push branch, merge, and tag to remote
+  - [x] 14.4 Merge branch into main/master
+  - [x] 14.5 Apply Git tag: 1.0.0 (without SNAPSHOT)
+  - [x] 14.6 Push branch, merge, and tag to remote
