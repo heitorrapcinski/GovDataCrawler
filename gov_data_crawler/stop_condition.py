@@ -83,3 +83,8 @@ class StopConditionChecker:
             'max_time', 'max_contracts', or None if no condition was triggered.
         """
         return self._triggered_condition
+
+    @property
+    def max_contracts(self) -> int | None:
+        """Return the configured max_contracts limit, or None if unlimited."""
+        return self._max_contracts

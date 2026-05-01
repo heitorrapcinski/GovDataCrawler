@@ -61,9 +61,14 @@ class CrawlOrchestrator:
         start_timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         self._logger.info("Crawl started at %s", start_timestamp)
 
-        # Step 1: Collect all contract IDs from listing pages
+        # Step 1: Collect contract IDs from listing pages.
+        # Pass max_contracts so the navigator can stop early instead of
+        # paginating through hundreds of thousands of records.
+        max_contracts = self._stop_condition_checker.max_contracts
         self._logger.info("Collecting contract IDs from listing pages...")
-        contract_ids = self._listing_navigator.collect_all_contract_ids()
+        contract_ids = self._listing_navigator.collect_all_contract_ids(
+            max_ids=max_contracts,
+        )
         self._logger.info("Collected %d contract IDs", len(contract_ids))
 
         # Step 2: Scan output directory for already-processed contracts
