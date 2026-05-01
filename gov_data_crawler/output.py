@@ -61,7 +61,9 @@ class OutputManager:
         """Replace filesystem-invalid characters with underscores.
 
         Characters replaced: ``<``, ``>``, ``:``, ``"``, ``/``, ``\\``,
-        ``|``, ``?``, ``*``.
+        ``|``, ``?``, ``*``.  Trailing spaces and periods are also
+        stripped because Windows silently removes them from directory
+        names, which can cause path mismatches.
 
         Args:
             name: Raw folder name.
@@ -69,7 +71,10 @@ class OutputManager:
         Returns:
             Sanitized folder name safe for all major filesystems.
         """
-        return _INVALID_CHARS_PATTERN.sub("_", name)
+        sanitized = _INVALID_CHARS_PATTERN.sub("_", name)
+        # Windows silently strips trailing spaces and periods from
+        # directory names, so we strip them explicitly for consistency.
+        return sanitized.rstrip(". ")
 
     def contract_already_processed(
         self, orgao: str, unidade_gestora: str, contract_id: str

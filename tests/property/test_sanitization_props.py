@@ -29,6 +29,14 @@ def test_sanitization_removes_all_invalid_characters(name: str) -> None:
     assert remaining_invalid == set(), (
         f"Sanitized name '{sanitized}' still contains invalid chars: {remaining_invalid}"
     )
+    # Trailing spaces and periods are invalid on Windows
+    if sanitized:
+        assert not sanitized.endswith(" "), (
+            f"Sanitized name '{sanitized}' has trailing space"
+        )
+        assert not sanitized.endswith("."), (
+            f"Sanitized name '{sanitized}' has trailing period"
+        )
 
 
 @settings(max_examples=100, deadline=1000)

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gov-data-crawler"
-version = "1.0.0.dev0"  # Corresponds to 1.0.0-SNAPSHOT (PEP 440 compliant)
+version = "1.0.0"
 description = "Web scraper for Brazilian government contract data from ComprasNet transparency portal"
 readme = "README.md"
 license = {text = "MIT"}
