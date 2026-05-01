@@ -52,12 +52,12 @@
   - [x] 7.2 Implement `parse_attachment_urls` method to extract all attachment download URLs from the detail page
   - [x] 7.3 Write unit tests in `tests/unit/test_detail_parser.py` for field extraction, attachment URL extraction, missing fields handling, and ParsingError raising
 
-- [ ] 8. Implement the AttachmentDownloader component
-  - [~] 8.1 Create `gov_data_crawler/attachments.py` with the `AttachmentDownloader` class: download files via HttpClient, save to target directory, extract filename from URL path or Content-Disposition header
-  - [~] 8.2 Implement error handling: log failures with URL and contract ID, continue with remaining attachments
-  - [~] 8.3 Write unit tests in `tests/unit/test_attachment_downloader.py` for successful download, filename extraction, download failure handling, and Content-Disposition parsing
-  - [~] 8.4 Write property test in `tests/property/test_filename_extraction_props.py` for Property 5: filename is preserved from download URL
-  - [~] 8.5 Run tests and verify all pass
+- [x] 8. Implement the AttachmentDownloader component
+  - [x] 8.1 Create `gov_data_crawler/attachments.py` with the `AttachmentDownloader` class: download files via HttpClient, save to target directory, extract filename from URL path or Content-Disposition header
+  - [x] 8.2 Implement error handling: log failures with URL and contract ID, continue with remaining attachments
+  - [x] 8.3 Write unit tests in `tests/unit/test_attachment_downloader.py` for successful download, filename extraction, download failure handling, and Content-Disposition parsing
+  - [x] 8.4 Write property test in `tests/property/test_filename_extraction_props.py` for Property 5: filename is preserved from download URL
+  - [x] 8.5 Run tests and verify all pass
 
 - [ ] 9. Implement the SummaryReporter component
   - [~] 9.1 Create `gov_data_crawler/summary.py` with the `CrawlSummary` dataclass and `SummaryReporter` class: track successes, failures, skips, and attachment counts, compute duration
