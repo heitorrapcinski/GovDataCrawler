@@ -59,12 +59,12 @@
   - [x] 8.4 Write property test in `tests/property/test_filename_extraction_props.py` for Property 5: filename is preserved from download URL
   - [x] 8.5 Run tests and verify all pass
 
-- [ ] 9. Implement the SummaryReporter component
-  - [~] 9.1 Create `gov_data_crawler/summary.py` with the `CrawlSummary` dataclass and `SummaryReporter` class: track successes, failures, skips, and attachment counts, compute duration
-  - [~] 9.2 Implement `finalize` method that produces a `CrawlSummary` and logs the summary to the logger
-  - [~] 9.3 Write unit tests in `tests/unit/test_summary_reporter.py` for event recording and summary generation
-  - [~] 9.4 Write property test in `tests/property/test_summary_reporter_props.py` for Property 8: summary counts are accurate
-  - [~] 9.5 Run tests and verify all pass
+- [x] 9. Implement the SummaryReporter component
+  - [x] 9.1 Create `gov_data_crawler/summary.py` with the `CrawlSummary` dataclass and `SummaryReporter` class: track successes, failures, skips, and attachment counts, compute duration
+  - [x] 9.2 Implement `finalize` method that produces a `CrawlSummary` and logs the summary to the logger
+  - [x] 9.3 Write unit tests in `tests/unit/test_summary_reporter.py` for event recording and summary generation
+  - [x] 9.4 Write property test in `tests/property/test_summary_reporter_props.py` for Property 8: summary counts are accurate
+  - [x] 9.5 Run tests and verify all pass
 
 - [ ] 10. Implement the ResumeDetector component
   - [~] 10.1 Create `gov_data_crawler/resume.py` with the `ResumeDetector` class: scan output directory for existing metadata.json files, return set of already-processed contract IDs
