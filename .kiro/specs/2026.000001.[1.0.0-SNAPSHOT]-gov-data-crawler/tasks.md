@@ -73,13 +73,13 @@
   - [x] 10.4 Write property test in `tests/property/test_resume_detector_props.py` for Property 9: correctly identifies processed contracts
   - [x] 10.5 Run tests and verify all pass
 
-- [ ] 11. Implement the StopConditionChecker component
-  - [~] 11.1 Create `gov_data_crawler/stop_condition.py` with the `StopConditionChecker` class: configurable `max_time` (float | None) and `max_contracts` (int | None), `start()` to record start time, `should_stop(successful_count)` to evaluate conditions, `triggered_condition` property
-  - [~] 11.2 Implement `should_stop` logic: return True if elapsed time >= max_time or successful_count >= max_contracts; return False when limits are None (no limit)
-  - [~] 11.3 Implement `triggered_condition` property returning `"max_time"`, `"max_contracts"`, or None
-  - [~] 11.4 Write unit tests in `tests/unit/test_stop_condition.py` for individual limits, combined limits, no limits (defaults), and triggered condition reporting
-  - [~] 11.5 Write property test in `tests/property/test_stop_condition_props.py` for Property 10: stop condition checker correctly evaluates stopping criteria
-  - [~] 11.6 Run tests and verify all pass
+- [x] 11. Implement the StopConditionChecker component
+  - [x] 11.1 Create `gov_data_crawler/stop_condition.py` with the `StopConditionChecker` class: configurable `max_time` (float | None) and `max_contracts` (int | None), `start()` to record start time, `should_stop(successful_count)` to evaluate conditions, `triggered_condition` property
+  - [x] 11.2 Implement `should_stop` logic: return True if elapsed time >= max_time or successful_count >= max_contracts; return False when limits are None (no limit)
+  - [x] 11.3 Implement `triggered_condition` property returning `"max_time"`, `"max_contracts"`, or None
+  - [x] 11.4 Write unit tests in `tests/unit/test_stop_condition.py` for individual limits, combined limits, no limits (defaults), and triggered condition reporting
+  - [x] 11.5 Write property test in `tests/property/test_stop_condition_props.py` for Property 10: stop condition checker correctly evaluates stopping criteria
+  - [x] 11.6 Run tests and verify all pass
 
 - [ ] 12. Implement the ContractProcessor component
   - [~] 12.1 Create `gov_data_crawler/processor.py` with the `ContractProcessor` class: fetch detail page, parse metadata, download attachments, write metadata, return ProcessingResult
