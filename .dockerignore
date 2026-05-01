@@ -1,0 +1,12 @@
+.git/
+.kiro/
+__pycache__/
+*.pyc
+.pytest_cache/
+htmlcov/
+target/
+tests/
+*.log
+.env
+venv/
+.venv/
