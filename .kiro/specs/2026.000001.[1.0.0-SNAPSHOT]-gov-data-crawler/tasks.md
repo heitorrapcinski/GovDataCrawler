@@ -86,15 +86,15 @@
   - [x] 12.2 Implement error handling: catch HttpRequestError and ParsingError, log errors, return failure result; handle 404 as skip without retry
   - [x] 12.3 Write unit tests in `tests/unit/test_contract_processor.py` with mocked dependencies for successful processing, detail page failure, 404 handling, and attachment failure
 
-- [ ] 13. Implement the CrawlOrchestrator and CLI entry point
-  - [~] 13.1 Create `gov_data_crawler/orchestrator.py` with the `CrawlOrchestrator` class: coordinate listing navigation, resume detection, contract processing, stop condition checking, and summary reporting
-  - [~] 13.2 Implement the full crawl lifecycle: collect IDs → filter already-processed → process remaining (checking stop conditions after each contract) → finalize summary with stop reason
-  - [~] 13.3 Create `gov_data_crawler/cli.py` with `parse_args` (argparse with --output-dir, --min-delay, --max-delay, --max-time, --max-contracts, --log-level), `setup_logging` (dual console + file handlers), and `main` entry point
-  - [~] 13.4 Update `gov_data_crawler/__main__.py` to call `cli.main()`
-  - [~] 13.5 Write unit tests in `tests/unit/test_cli.py` for argument parsing with defaults and custom values, including --max-time and --max-contracts flags
-  - [~] 13.6 Write integration tests in `tests/integration/test_crawl_orchestrator.py` for full crawl with mocked HTTP responses, including stop condition scenarios
-  - [~] 13.7 Write integration tests in `tests/integration/test_pagination_flow.py` for multi-page navigation with mocked HTTP
-  - [~] 13.8 Run the full test suite and verify all tests pass
+- [x] 13. Implement the CrawlOrchestrator and CLI entry point
+  - [x] 13.1 Create `gov_data_crawler/orchestrator.py` with the `CrawlOrchestrator` class: coordinate listing navigation, resume detection, contract processing, stop condition checking, and summary reporting
+  - [x] 13.2 Implement the full crawl lifecycle: collect IDs → filter already-processed → process remaining (checking stop conditions after each contract) → finalize summary with stop reason
+  - [x] 13.3 Create `gov_data_crawler/cli.py` with `parse_args` (argparse with --output-dir, --min-delay, --max-delay, --max-time, --max-contracts, --log-level), `setup_logging` (dual console + file handlers), and `main` entry point
+  - [x] 13.4 Update `gov_data_crawler/__main__.py` to call `cli.main()`
+  - [x] 13.5 Write unit tests in `tests/unit/test_cli.py` for argument parsing with defaults and custom values, including --max-time and --max-contracts flags
+  - [x] 13.6 Write integration tests in `tests/integration/test_crawl_orchestrator.py` for full crawl with mocked HTTP responses, including stop condition scenarios
+  - [x] 13.7 Write integration tests in `tests/integration/test_pagination_flow.py` for multi-page navigation with mocked HTTP
+  - [x] 13.8 Run the full test suite and verify all tests pass
 
 - [ ] 14. Version control and release
   - [~] 14.1 Ensure all previous tasks are complete and tests pass
