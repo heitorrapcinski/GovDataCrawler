@@ -47,10 +47,10 @@
   - [x] 6.5 Write property test in `tests/property/test_url_construction_props.py` for Property 2: contract detail URL is correctly constructed
   - [x] 6.6 Run tests and verify all pass
 
-- [ ] 7. Implement the DetailParser component
-  - [~] 7.1 Create `gov_data_crawler/detail_parser.py` with the `DetailParser` class: extract all contract fields (orgao, unidade_gestora, contract_number, supplier_name, contract_value, start_date, end_date, object_description, extra_fields) from detail page HTML using BeautifulSoup
-  - [~] 7.2 Implement `parse_attachment_urls` method to extract all attachment download URLs from the detail page
-  - [~] 7.3 Write unit tests in `tests/unit/test_detail_parser.py` for field extraction, attachment URL extraction, missing fields handling, and ParsingError raising
+- [x] 7. Implement the DetailParser component
+  - [x] 7.1 Create `gov_data_crawler/detail_parser.py` with the `DetailParser` class: extract all contract fields (orgao, unidade_gestora, contract_number, supplier_name, contract_value, start_date, end_date, object_description, extra_fields) from detail page HTML using BeautifulSoup
+  - [x] 7.2 Implement `parse_attachment_urls` method to extract all attachment download URLs from the detail page
+  - [x] 7.3 Write unit tests in `tests/unit/test_detail_parser.py` for field extraction, attachment URL extraction, missing fields handling, and ParsingError raising
 
 - [ ] 8. Implement the AttachmentDownloader component
   - [~] 8.1 Create `gov_data_crawler/attachments.py` with the `AttachmentDownloader` class: download files via HttpClient, save to target directory, extract filename from URL path or Content-Disposition header
