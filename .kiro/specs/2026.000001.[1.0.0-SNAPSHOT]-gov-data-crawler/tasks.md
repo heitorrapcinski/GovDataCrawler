@@ -81,10 +81,10 @@
   - [x] 11.5 Write property test in `tests/property/test_stop_condition_props.py` for Property 10: stop condition checker correctly evaluates stopping criteria
   - [x] 11.6 Run tests and verify all pass
 
-- [ ] 12. Implement the ContractProcessor component
-  - [~] 12.1 Create `gov_data_crawler/processor.py` with the `ContractProcessor` class: fetch detail page, parse metadata, download attachments, write metadata, return ProcessingResult
-  - [~] 12.2 Implement error handling: catch HttpRequestError and ParsingError, log errors, return failure result; handle 404 as skip without retry
-  - [~] 12.3 Write unit tests in `tests/unit/test_contract_processor.py` with mocked dependencies for successful processing, detail page failure, 404 handling, and attachment failure
+- [x] 12. Implement the ContractProcessor component
+  - [x] 12.1 Create `gov_data_crawler/processor.py` with the `ContractProcessor` class: fetch detail page, parse metadata, download attachments, write metadata, return ProcessingResult
+  - [x] 12.2 Implement error handling: catch HttpRequestError and ParsingError, log errors, return failure result; handle 404 as skip without retry
+  - [x] 12.3 Write unit tests in `tests/unit/test_contract_processor.py` with mocked dependencies for successful processing, detail page failure, 404 handling, and attachment failure
 
 - [ ] 13. Implement the CrawlOrchestrator and CLI entry point
   - [~] 13.1 Create `gov_data_crawler/orchestrator.py` with the `CrawlOrchestrator` class: coordinate listing navigation, resume detection, contract processing, stop condition checking, and summary reporting
