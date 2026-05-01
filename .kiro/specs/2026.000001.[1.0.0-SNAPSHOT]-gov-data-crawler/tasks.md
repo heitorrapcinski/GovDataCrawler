@@ -9,12 +9,12 @@
   - [x] 1.6 Create `.dockerignore` with entries for `.git/`, `.kiro/`, `__pycache__/`, `*.pyc`, `.pytest_cache/`, `htmlcov/`, `target/`, `tests/`, `*.log`, `.env`, `venv/`, `.venv/`
   - [x] 1.7 Verify the project installs and pytest discovers the test directories
 
-- [ ] 2. Implement the DelayMechanism component
-  - [~] 2.1 Create `gov_data_crawler/delay.py` with the `DelayMechanism` class: configurable min/max seconds, random delay generation via `random.uniform`, auto-swap when min > max with warning log
-  - [~] 2.2 Implement default values of 2.0 and 5.0 seconds when no configuration is provided
-  - [~] 2.3 Write unit tests in `tests/unit/test_delay_mechanism.py` for defaults, custom values, and min > max swap behavior
-  - [~] 2.4 Write property test in `tests/property/test_delay_mechanism_props.py` for Property 6: delay always within bounds after auto-correction
-  - [~] 2.5 Run tests and verify all pass
+- [x] 2. Implement the DelayMechanism component
+  - [x] 2.1 Create `gov_data_crawler/delay.py` with the `DelayMechanism` class: configurable min/max seconds, random delay generation via `random.uniform`, auto-swap when min > max with warning log
+  - [x] 2.2 Implement default values of 2.0 and 5.0 seconds when no configuration is provided
+  - [x] 2.3 Write unit tests in `tests/unit/test_delay_mechanism.py` for defaults, custom values, and min > max swap behavior
+  - [x] 2.4 Write property test in `tests/property/test_delay_mechanism_props.py` for Property 6: delay always within bounds after auto-correction
+  - [x] 2.5 Run tests and verify all pass
 
 - [ ] 3. Implement the OutputManager component
   - [~] 3.1 Create `gov_data_crawler/output.py` with the `OutputManager` class: base directory management, directory creation, contract directory path construction following `{base_dir}/{orgao}/{unidade_gestora}/{contract_id}/` pattern
