@@ -16,15 +16,15 @@
   - [x] 2.4 Write property test in `tests/property/test_delay_mechanism_props.py` for Property 6: delay always within bounds after auto-correction
   - [x] 2.5 Run tests and verify all pass
 
-- [ ] 3. Implement the OutputManager component
-  - [~] 3.1 Create `gov_data_crawler/output.py` with the `OutputManager` class: base directory management, directory creation, contract directory path construction following `{base_dir}/{orgao}/{unidade_gestora}/{contract_id}/` pattern
-  - [~] 3.2 Implement `sanitize_folder_name` static method replacing filesystem-invalid characters (`<`, `>`, `:`, `"`, `/`, `\`, `|`, `?`, `*`) with underscores
-  - [~] 3.3 Implement `contract_already_processed` method checking for `metadata.json` existence
-  - [~] 3.4 Implement default `target` directory name when no custom path is provided
-  - [~] 3.5 Write unit tests in `tests/unit/test_output_manager.py` for path construction, directory creation, default directory, and processed detection
-  - [~] 3.6 Write property test in `tests/property/test_sanitization_props.py` for Property 7: sanitization removes invalid characters and is idempotent
-  - [~] 3.7 Write property test in `tests/property/test_output_structure_props.py` for Property 4: directory structure follows hierarchical pattern
-  - [~] 3.8 Run tests and verify all pass
+- [x] 3. Implement the OutputManager component
+  - [x] 3.1 Create `gov_data_crawler/output.py` with the `OutputManager` class: base directory management, directory creation, contract directory path construction following `{base_dir}/{orgao}/{unidade_gestora}/{contract_id}/` pattern
+  - [x] 3.2 Implement `sanitize_folder_name` static method replacing filesystem-invalid characters (`<`, `>`, `:`, `"`, `/`, `\`, `|`, `?`, `*`) with underscores
+  - [x] 3.3 Implement `contract_already_processed` method checking for `metadata.json` existence
+  - [x] 3.4 Implement default `target` directory name when no custom path is provided
+  - [x] 3.5 Write unit tests in `tests/unit/test_output_manager.py` for path construction, directory creation, default directory, and processed detection
+  - [x] 3.6 Write property test in `tests/property/test_sanitization_props.py` for Property 7: sanitization removes invalid characters and is idempotent
+  - [x] 3.7 Write property test in `tests/property/test_output_structure_props.py` for Property 4: directory structure follows hierarchical pattern
+  - [x] 3.8 Run tests and verify all pass
 
 - [ ] 4. Implement the MetadataWriter and ContractMetadata data model
   - [~] 4.1 Create `gov_data_crawler/contract.py` with the `ContractMetadata` dataclass, `ProcessingResult` dataclass, `HttpRequestError` exception, and `ParsingError` exception
