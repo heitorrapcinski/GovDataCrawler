@@ -66,12 +66,12 @@
   - [x] 9.4 Write property test in `tests/property/test_summary_reporter_props.py` for Property 8: summary counts are accurate
   - [x] 9.5 Run tests and verify all pass
 
-- [ ] 10. Implement the ResumeDetector component
-  - [~] 10.1 Create `gov_data_crawler/resume.py` with the `ResumeDetector` class: scan output directory for existing metadata.json files, return set of already-processed contract IDs
-  - [~] 10.2 Implement logging of skipped contract count during resumption
-  - [~] 10.3 Write unit tests in `tests/unit/test_resume_detector.py` for detection with existing files, empty directory, and partial processing
-  - [~] 10.4 Write property test in `tests/property/test_resume_detector_props.py` for Property 9: correctly identifies processed contracts
-  - [~] 10.5 Run tests and verify all pass
+- [x] 10. Implement the ResumeDetector component
+  - [x] 10.1 Create `gov_data_crawler/resume.py` with the `ResumeDetector` class: scan output directory for existing metadata.json files, return set of already-processed contract IDs
+  - [x] 10.2 Implement logging of skipped contract count during resumption
+  - [x] 10.3 Write unit tests in `tests/unit/test_resume_detector.py` for detection with existing files, empty directory, and partial processing
+  - [x] 10.4 Write property test in `tests/property/test_resume_detector_props.py` for Property 9: correctly identifies processed contracts
+  - [x] 10.5 Run tests and verify all pass
 
 - [ ] 11. Implement the StopConditionChecker component
   - [~] 11.1 Create `gov_data_crawler/stop_condition.py` with the `StopConditionChecker` class: configurable `max_time` (float | None) and `max_contracts` (int | None), `start()` to record start time, `should_stop(successful_count)` to evaluate conditions, `triggered_condition` property
