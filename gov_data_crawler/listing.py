@@ -3,6 +3,7 @@
 import json
 import logging
 import re
+from dataclasses import dataclass
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
@@ -22,6 +23,45 @@ CONTRACT_LINK_PATTERN = re.compile(
 
 # Default page size for DataTables server-side requests.
 DEFAULT_PAGE_SIZE = 25
+
+
+@dataclass(frozen=True)
+class FilterParameters:
+    """Immutable container for optional listing filters.
+
+    Attributes:
+        orgao: Government organ number to filter by, or None.
+        categoria: Contract category to filter by, or None.
+    """
+
+    orgao: str | None = None
+    categoria: str | None = None
+
+    @property
+    def has_filters(self) -> bool:
+        """Return True if at least one filter is set."""
+        return self.orgao is not None or self.categoria is not None
+
+    def to_post_params(self) -> dict[str, str]:
+        """Convert active filters to a dict suitable for POST data.
+
+        Returns:
+            Dict with only the non-None filter values.
+        """
+        params: dict[str, str] = {}
+        if self.orgao is not None:
+            params["orgao"] = self.orgao
+        if self.categoria is not None:
+            params["categoria"] = self.categoria
+        return params
+
+    def to_query_params(self) -> dict[str, str]:
+        """Convert active filters to a dict suitable for URL query parameters.
+
+        Returns:
+            Dict with only the non-None filter values.
+        """
+        return self.to_post_params()
 
 
 class ListingParser:
