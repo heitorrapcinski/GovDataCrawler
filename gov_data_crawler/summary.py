@@ -1,8 +1,14 @@
 """Summary reporter for tracking and reporting crawl execution statistics."""
 
+from __future__ import annotations
+
 import logging
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from gov_data_crawler.listing import FilterParameters
 
 
 @dataclass
@@ -18,6 +24,7 @@ class CrawlSummary:
     end_time: str
     duration_seconds: float
     stopped_by: str | None = None  # "max_time", "max_contracts", or None
+    filters: dict[str, str] | None = None  # Active filter params, or None
 
 
 class SummaryReporter:
@@ -27,13 +34,15 @@ class SummaryReporter:
     produces a CrawlSummary with computed duration and totals.
     """
 
-    def __init__(self, logger: logging.Logger) -> None:
+    def __init__(self, logger: logging.Logger, filters: FilterParameters | None = None) -> None:
         """Initialize the reporter and record the start time.
 
         Args:
             logger: Logger instance for summary output.
+            filters: Optional filter parameters to include in the summary.
         """
         self._logger = logger
+        self._filters = filters
         self._successful = 0
         self._failed = 0
         self._skipped = 0
@@ -97,6 +106,7 @@ class SummaryReporter:
             end_time=end_time.isoformat(),
             duration_seconds=duration,
             stopped_by=stopped_by,
+            filters=self._filters.to_post_params() if self._filters and self._filters.has_filters else None,
         )
 
         self._logger.info("Crawl summary:")
@@ -110,5 +120,7 @@ class SummaryReporter:
         self._logger.info("  Duration: %.2f seconds", summary.duration_seconds)
         if summary.stopped_by:
             self._logger.info("  Stopped by: %s", summary.stopped_by)
+        if summary.filters:
+            self._logger.info("  Filters: %s", summary.filters)
 
         return summary
