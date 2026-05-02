@@ -9,7 +9,7 @@ from gov_data_crawler.attachments import AttachmentDownloader
 from gov_data_crawler.delay import DelayMechanism
 from gov_data_crawler.detail_parser import DetailParser
 from gov_data_crawler.http_client import HttpClient
-from gov_data_crawler.listing import BASE_URL, LISTING_PATH, ListingNavigator, ListingParser
+from gov_data_crawler.listing import BASE_URL, LISTING_PATH, FilterParameters, ListingNavigator, ListingParser
 from gov_data_crawler.metadata import MetadataWriter
 from gov_data_crawler.orchestrator import CrawlOrchestrator
 from gov_data_crawler.output import OutputManager
@@ -26,7 +26,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
     Returns:
         Parsed namespace with: output_dir, min_delay, max_delay,
-        max_time, max_contracts, log_level.
+        max_time, max_contracts, log_level, orgao, categoria.
     """
     parser = argparse.ArgumentParser(
         prog="gov-data-crawler",
@@ -69,6 +69,19 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
         help="Logging level (default: INFO)",
+    )
+
+    parser.add_argument(
+        "--orgao",
+        type=str,
+        default=None,
+        help="Filter contracts by government organ number (número do órgão)",
+    )
+    parser.add_argument(
+        "--categoria",
+        type=str,
+        default=None,
+        help="Filter contracts by category (categoria)",
     )
 
     return parser.parse_args(argv)
@@ -135,6 +148,16 @@ def main(argv: list[str] | None = None) -> None:
     logger.info("  Max time: %s", args.max_time or "no limit")
     logger.info("  Max contracts: %s", args.max_contracts or "no limit")
     logger.info("  Log level: %s", args.log_level)
+
+    filters = FilterParameters(orgao=args.orgao, categoria=args.categoria)
+
+    if filters.has_filters:
+        if filters.orgao is not None:
+            logger.info("  Filter orgao: %s", filters.orgao)
+        if filters.categoria is not None:
+            logger.info("  Filter categoria: %s", filters.categoria)
+    else:
+        logger.info("  No filters active — all contracts will be collected")
 
     # Create all components
     delay_mechanism = DelayMechanism(
