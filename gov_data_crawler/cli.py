@@ -173,6 +173,7 @@ def main(argv: list[str] | None = None) -> None:
         parser=listing_parser,
         base_url=f"{BASE_URL}{LISTING_PATH}",
         logger=logger,
+        filters=filters,
     )
 
     detail_parser = DetailParser()

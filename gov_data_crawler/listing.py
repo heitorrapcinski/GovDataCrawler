@@ -4,7 +4,7 @@ import json
 import logging
 import re
 from dataclasses import dataclass
-from urllib.parse import urljoin
+from urllib.parse import urlencode, urljoin
 
 from bs4 import BeautifulSoup
 
@@ -184,6 +184,7 @@ class ListingNavigator:
         parser: ListingParser,
         base_url: str,
         logger: logging.Logger,
+        filters: FilterParameters | None = None,
     ) -> None:
         """Initialize the listing navigator.
 
@@ -192,11 +193,13 @@ class ListingNavigator:
             parser: Parser for extracting data from listing HTML / JSON.
             base_url: The starting URL for the contract listing.
             logger: Logger instance for progress messages.
+            filters: Optional filter parameters to apply to every request.
         """
         self._http_client = http_client
         self._parser = parser
         self._base_url = base_url
         self._logger = logger
+        self._filters = filters or FilterParameters()
 
     def collect_all_contract_ids(self, max_ids: int | None = None) -> list[str]:
         """Collect contract IDs using the DataTables server-side API.
@@ -273,6 +276,8 @@ class ListingNavigator:
                 "start": str(start),
                 "length": str(page_size),
             }
+            # Merge filter parameters into POST data
+            post_data.update(self._filters.to_post_params())
 
             response = self._http_client.post(
                 search_url, data=post_data, headers=headers
@@ -329,13 +334,31 @@ class ListingNavigator:
         )
         return all_ids
 
+    def _append_filter_query_params(self, url: str) -> str:
+        """Append active filter parameters as query string to a URL.
+
+        Args:
+            url: The base URL to append filter query parameters to.
+
+        Returns:
+            The URL with filter query parameters appended, or the
+            original URL if no filters are active.
+        """
+        query_params = self._filters.to_query_params()
+        if not query_params:
+            return url
+        separator = "&" if "?" in url else "?"
+        return f"{url}{separator}{urlencode(query_params)}"
+
     def _collect_via_html_scraping(
         self, initial_html: str, max_ids: int | None = None
     ) -> list[str]:
         """Legacy fallback: scrape contract IDs from rendered HTML pages.
 
         Used when the CSRF token cannot be obtained and the DataTables
-        API is unavailable.
+        API is unavailable.  When filters are active, the initial page
+        is re-fetched with filter query parameters and all subsequent
+        page URLs also include the filter parameters.
 
         Args:
             initial_html: HTML of the first listing page (already fetched).
@@ -348,7 +371,17 @@ class ListingNavigator:
         seen: set[str] = set()
         page_number = 1
 
-        # Process the already-fetched first page.
+        # If filters are active, the initial HTML was fetched without
+        # filters, so re-fetch the first page with filter query params.
+        if self._filters.has_filters:
+            filtered_url = self._append_filter_query_params(self._base_url)
+            self._logger.info(
+                "Re-fetching listing page 1 with filters: %s", filtered_url
+            )
+            response = self._http_client.get(filtered_url)
+            initial_html = response.text
+
+        # Process the first page.
         page_ids = self._parser.parse_contract_ids(initial_html)
         for cid in page_ids:
             if cid not in seen:
@@ -374,10 +407,12 @@ class ListingNavigator:
         page_number += 1
 
         while current_url is not None:
+            # Append filter query params to subsequent page URLs
+            filtered_url = self._append_filter_query_params(current_url)
             self._logger.info(
-                "Fetching listing page %d: %s", page_number, current_url
+                "Fetching listing page %d: %s", page_number, filtered_url
             )
-            response = self._http_client.get(current_url)
+            response = self._http_client.get(filtered_url)
             page_ids = self._parser.parse_contract_ids(response.text)
 
             new_count = 0
