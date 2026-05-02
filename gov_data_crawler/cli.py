@@ -191,7 +191,7 @@ def main(argv: list[str] | None = None) -> None:
         logger=logger,
     )
 
-    summary_reporter = SummaryReporter(logger=logger)
+    summary_reporter = SummaryReporter(logger=logger, filters=filters)
 
     stop_condition_checker = StopConditionChecker(
         max_time=args.max_time,
