@@ -56,12 +56,22 @@ class FilterParameters:
         return params
 
     def to_query_params(self) -> dict[str, str]:
-        """Convert active filters to a dict suitable for URL query parameters.
+        """Convert active filters to URL query parameters.
+
+        The ComprasNet portal uses Laravel Backpack CRUD with
+        ``select2_multiple`` filters.  These filters encode their
+        values as JSON arrays (e.g. ``orgao=["25000"]``) in the
+        DataTables AJAX URL query string.
 
         Returns:
-            Dict with only the non-None filter values.
+            Dict with JSON-encoded array values for each active filter.
         """
-        return self.to_post_params()
+        params: dict[str, str] = {}
+        if self.orgao is not None:
+            params["orgao"] = json.dumps([self.orgao])
+        if self.categoria is not None:
+            params["categoria"] = json.dumps([self.categoria])
+        return params
 
 
 class ListingParser:
@@ -210,7 +220,9 @@ class ListingNavigator:
            or ``max_ids`` is reached.
 
         If the CSRF token cannot be obtained (e.g. the page structure
-        changed), falls back to the legacy HTML-scraping approach.
+        changed), falls back to the legacy HTML-scraping approach.  The
+        same fallback is used when the API returns an error on the first
+        page (e.g. the server rejects unknown filter parameters).
 
         Args:
             max_ids: Optional upper limit on the number of IDs to collect.
@@ -276,11 +288,15 @@ class ListingNavigator:
                 "start": str(start),
                 "length": str(page_size),
             }
-            # Merge filter parameters into POST data
-            post_data.update(self._filters.to_post_params())
+
+            # Backpack CRUD filters are passed as URL query parameters
+            # on the search endpoint, not as POST body fields.  The
+            # DataTables pagination params (draw, start, length) remain
+            # in the POST body.
+            request_url = self._append_filter_query_params(search_url)
 
             response = self._http_client.post(
-                search_url, data=post_data, headers=headers
+                request_url, data=post_data, headers=headers
             )
 
             try:
