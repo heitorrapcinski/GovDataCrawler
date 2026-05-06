@@ -144,6 +144,7 @@ def main(argv: list[str] | None = None) -> None:
 
     logger.info("GovDataCrawler starting with configuration:")
     logger.info("  Output directory: %s", args.output_dir)
+    logger.info("  Target URL: %s", BASE_URL)
     logger.info("  Delay: %.1f - %.1f seconds", args.min_delay, args.max_delay)
     logger.info("  Max time: %s", args.max_time or "no limit")
     logger.info("  Max contracts: %s", args.max_contracts or "no limit")
@@ -165,7 +166,7 @@ def main(argv: list[str] | None = None) -> None:
         max_seconds=args.max_delay,
     )
     http_client = HttpClient(delay_mechanism=delay_mechanism, logger=logger)
-    output_manager = OutputManager(base_dir=args.output_dir)
+    output_manager = OutputManager(base_dir=args.output_dir, url=BASE_URL)
 
     listing_parser = ListingParser()
     listing_navigator = ListingNavigator(
@@ -204,7 +205,7 @@ def main(argv: list[str] | None = None) -> None:
         contract_processor=contract_processor,
         summary_reporter=summary_reporter,
         stop_condition_checker=stop_condition_checker,
-        output_dir=args.output_dir,
+        output_dir=output_manager.effective_dir,
         logger=logger,
     )
 
