@@ -430,3 +430,158 @@ def test_truncation_notice_when_results_exceed_limit(
         f"Expected at most 20 referenced contracts but got "
         f"{len(response.referenced_contracts)}"
     )
+
+
+# =============================================================================
+# Property 5: Query input validation accepts valid lengths and rejects invalid
+# =============================================================================
+
+from hypothesis import HealthCheck
+
+from openclaws.cli import validate_query
+
+
+# Strategy for generating valid queries: stripped length between 1 and 2000
+_valid_query_content = st.text(
+    alphabet=st.characters(whitelist_categories=("L", "N", "P", "Z")),
+    min_size=1,
+    max_size=2000,
+).filter(lambda s: 1 <= len(s.strip()) <= 2000)
+
+# Strategy for generating whitespace padding (leading/trailing)
+_whitespace_padding = st.text(
+    alphabet=st.just(" "),
+    min_size=0,
+    max_size=10,
+)
+
+# Strategy for generating strings that are empty or whitespace-only
+_blank_query = st.one_of(
+    st.just(""),
+    st.text(
+        alphabet=st.sampled_from([" ", "\t", "\n", "\r"]),
+        min_size=1,
+        max_size=50,
+    ),
+)
+
+# Strategy for generating strings whose stripped length exceeds 2000.
+# Uses a base character repeated to guarantee length, combined with a suffix.
+_over_limit_query = st.integers(min_value=2001, max_value=2500).flatmap(
+    lambda n: st.text(
+        alphabet=st.characters(whitelist_categories=("L", "N")),
+        min_size=n,
+        max_size=n,
+    )
+)
+
+
+@settings(max_examples=100, deadline=5000)
+@given(query=_valid_query_content)
+def test_validate_query_accepts_valid_lengths(query: str) -> None:
+    """Property 5: For any string whose stripped length is between 1 and 2000
+    characters (inclusive), the CLI input validator SHALL accept it.
+
+    Feature: openclaws-ai-assistant, Property 5: Query input validation accepts valid lengths and rejects invalid
+
+    **Validates: Requirements 5.1, 5.2**
+    """
+    is_valid, error_message = validate_query(query)
+
+    assert is_valid is True, (
+        f"Expected query to be accepted (stripped length={len(query.strip())}), "
+        f"but got rejected with: {error_message}"
+    )
+    assert error_message == "", (
+        f"Expected empty error message for valid query, but got: {error_message}"
+    )
+
+
+@settings(max_examples=100, deadline=5000)
+@given(query=_blank_query)
+def test_validate_query_rejects_empty_or_blank(query: str) -> None:
+    """Property 5: Empty strings and whitespace-only strings SHALL be rejected
+    with an error message indicating the allowed query length.
+
+    Feature: openclaws-ai-assistant, Property 5: Query input validation accepts valid lengths and rejects invalid
+
+    **Validates: Requirements 5.1, 5.2**
+    """
+    is_valid, error_message = validate_query(query)
+
+    assert is_valid is False, (
+        f"Expected blank/empty query to be rejected, but it was accepted. "
+        f"Query repr: {repr(query)}"
+    )
+    assert error_message != "", (
+        "Expected a non-empty error message for blank/empty query"
+    )
+    # Error message should indicate allowed length
+    assert "1" in error_message and "2000" in error_message, (
+        f"Error message should indicate allowed query length (1-2000), "
+        f"but got: {error_message}"
+    )
+
+
+@settings(max_examples=100, deadline=5000, suppress_health_check=[HealthCheck.large_base_example])
+@given(query=_over_limit_query)
+def test_validate_query_rejects_over_limit(query: str) -> None:
+    """Property 5: Strings exceeding 2000 characters after stripping SHALL be
+    rejected with an error message indicating the allowed query length.
+
+    Feature: openclaws-ai-assistant, Property 5: Query input validation accepts valid lengths and rejects invalid
+
+    **Validates: Requirements 5.1, 5.2**
+    """
+    is_valid, error_message = validate_query(query)
+
+    assert is_valid is False, (
+        f"Expected over-limit query (stripped length={len(query.strip())}) "
+        f"to be rejected, but it was accepted."
+    )
+    assert error_message != "", (
+        "Expected a non-empty error message for over-limit query"
+    )
+    # Error message should indicate the maximum length
+    assert "2000" in error_message, (
+        f"Error message should mention the 2000 character limit, "
+        f"but got: {error_message}"
+    )
+
+
+@settings(max_examples=100, deadline=5000)
+@given(
+    content=st.text(
+        alphabet=st.characters(whitelist_categories=("L", "N", "P")),
+        min_size=1,
+        max_size=1990,
+    ).filter(lambda s: len(s.strip()) >= 1),
+    leading_spaces=_whitespace_padding,
+    trailing_spaces=_whitespace_padding,
+)
+def test_validate_query_uses_stripped_length(
+    content: str,
+    leading_spaces: str,
+    trailing_spaces: str,
+) -> None:
+    """Property 5: The validator SHALL use the stripped length of the input
+    (not the raw length) to determine validity.
+
+    Feature: openclaws-ai-assistant, Property 5: Query input validation accepts valid lengths and rejects invalid
+
+    **Validates: Requirements 5.1, 5.2**
+    """
+    query = leading_spaces + content + trailing_spaces
+    stripped_length = len(query.strip())
+
+    is_valid, error_message = validate_query(query)
+
+    if 1 <= stripped_length <= 2000:
+        assert is_valid is True, (
+            f"Expected query with stripped length {stripped_length} to be accepted, "
+            f"but got rejected with: {error_message}"
+        )
+    else:
+        assert is_valid is False, (
+            f"Expected query with stripped length {stripped_length} to be rejected"
+        )
