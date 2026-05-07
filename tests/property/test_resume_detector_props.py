@@ -9,6 +9,7 @@ Validates: Requirements 7.1, 7.2
 import json
 import logging
 import os
+import sys
 import tempfile
 
 from hypothesis import given, settings
@@ -17,9 +18,16 @@ from hypothesis import strategies as st
 from gov_data_crawler.output import OutputManager
 from gov_data_crawler.resume import ResumeDetector
 
-# Strategy for contract IDs: short alphanumeric strings
+# Strategy for contract IDs: short alphanumeric strings.
+# On Windows the filesystem is case-insensitive, so IDs that differ only
+# in case (e.g. 'A' vs 'a') map to the same directory. We use lowercase
+# only on case-insensitive platforms to avoid false-positive collisions.
+_CASE_INSENSITIVE_FS = sys.platform == "win32"
+
 contract_id_strategy = st.text(
-    alphabet=st.characters(whitelist_categories=("L", "N")),
+    alphabet=st.characters(
+        whitelist_categories=("Ll", "N") if _CASE_INSENSITIVE_FS else ("L", "N")
+    ),
     min_size=1,
     max_size=10,
 )
