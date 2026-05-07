@@ -270,13 +270,13 @@ Implement the OpenClaws AI Assistant as a containerized Python CLI application t
 - [x] 12. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [~] 13. Version control and release
+- [x] 13. Version control and release
   - [x] Ensure all previous tasks are complete and tests pass
-  - [-] Remove SNAPSHOT suffix from all version references in the codebase
-  - [~] Commit the version bump: "release: 1.2.0 - openclaws-ai-assistant"
-  - [~] Merge branch into main/master
-  - [~] Apply Git tag: 1.2.0 (without SNAPSHOT)
-  - [~] Push branch, merge, and tag to remote
+  - [x] Remove SNAPSHOT suffix from all version references in the codebase
+  - [x] Commit the version bump: "release: 1.2.0 - openclaws-ai-assistant"
+  - [x] Merge branch into main/master
+  - [x] Apply Git tag: 1.2.0 (without SNAPSHOT)
+  - [x] Push branch, merge, and tag to remote
 
 ## Notes
 
