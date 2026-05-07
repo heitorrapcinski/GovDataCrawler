@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  granite:
+    image: "ibm-granite/granite-3.1-8b-instruct:latest"
+    container_name: openclaws-granite
+    networks:
+      - openclaws-internal
+    environment:
+      - GRANITE_MODEL_NAME=${GRANITE_MODEL_NAME:-ibm-granite/granite-3.1-8b-instruct}
+      - GRANITE_INFERENCE_PORT=${GRANITE_INFERENCE_PORT:-8080}
+      - GRANITE_MAX_CONTEXT_LENGTH=${GRANITE_MAX_CONTEXT_LENGTH:-4096}
+      - GRANITE_TEMPERATURE=${GRANITE_TEMPERATURE:-0.7}
+      - GRANITE_MAX_TOKENS=${GRANITE_MAX_TOKENS:-2048}
+      - GRANITE_TOP_P=${GRANITE_TOP_P:-0.95}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  openclaws:
+    build:
+      context: .
+      dockerfile: openclaws/Dockerfile
+    container_name: openclaws-agent
+    depends_on:
+      granite:
+        condition: service_healthy
+    networks:
+      - default
+      - openclaws-internal
+    volumes:
+      - ./target:/app/target:ro
+      - openclaws-cache:/app/legislation_cache
+    environment:
+      - OPENCLAWS_TARGET_FOLDER=${OPENCLAWS_TARGET_FOLDER:-/app/target}
+      - OPENCLAWS_GRANITE_ENDPOINT=${OPENCLAWS_GRANITE_ENDPOINT:-http://granite:8080}
+      - OPENCLAWS_HEALTH_CHECK_INTERVAL=${OPENCLAWS_HEALTH_CHECK_INTERVAL:-30}
+      - OPENCLAWS_LOG_LEVEL=${OPENCLAWS_LOG_LEVEL:-INFO}
+    stdin_open: true
+    tty: true
+
+networks:
+  openclaws-internal:
+    internal: true
+
+volumes:
+  openclaws-cache:

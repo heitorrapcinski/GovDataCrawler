@@ -3,6 +3,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+.hypothesis/
 htmlcov/
 target/
 tests/
@@ -10,3 +11,5 @@ tests/
 .env
 venv/
 .venv/
+openclaws-cache/
+legislation_cache/
