@@ -10,3 +10,4 @@ target/
 .env
 venv/
 .venv/
+legislation_cache/
