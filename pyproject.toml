@@ -13,6 +13,7 @@ dependencies = [
     "requests==2.32.3",
     "beautifulsoup4==4.12.3",
     "lxml==6.1.0",
+    "PyPDF2>=3.0.0",
 ]
 
 [project.optional-dependencies]
@@ -25,10 +26,11 @@ dev = [
 
 [project.scripts]
 gov-data-crawler = "gov_data_crawler.cli:main"
+openclaws = "openclaws.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
 
 [tool.setuptools.packages.find]
-include = ["gov_data_crawler*"]
+include = ["gov_data_crawler*", "openclaws*"]
