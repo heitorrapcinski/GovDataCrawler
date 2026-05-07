@@ -22,6 +22,7 @@ dev = [
     "hypothesis==6.122.3",
     "pytest-cov==6.1.1",
     "responses==0.25.7",
+    "PyYAML>=6.0",
 ]
 
 [project.scripts]
